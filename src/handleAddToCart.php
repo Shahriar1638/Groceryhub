@@ -1,4 +1,3 @@
-<!-- Mehraaj -->
 <?php 
 require('DBconnect.php');
 if (isset($_POST['productname']) && isset($_POST['productprice']) && isset($_POST['customeremail']) && isset($_POST['productid']) && isset($_POST['productamount']) && isset($_POST['selleremail'])){

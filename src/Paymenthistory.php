@@ -53,7 +53,16 @@
                             ?>
                             <tr>
                             <td><?php echo $transactionid; ?></td>
-                            <td><?php echo "allitems"; ?></td>
+                            <td>
+                                <button class="btn" onclick="document.getElementById('modal_<?php echo $transactionid; ?>').showModal()">
+                                    <?php echo substr($products, 0, 50) . (strlen($products) > 60 ? '...' : ''); ?>
+                                </button>
+                                <dialog id="modal_<?php echo $transactionid; ?>" class="modal">
+                                    <div class="modal-box">
+                                        <h3 class="text-lg font-bold"><?php echo $products; ?></h3>
+                                    </div>
+                                </dialog>
+                            </td>
                             <td><?php echo $paidammount; ?></td>
                             <td><?php echo $paymentdate; ?></td>
                         </tr>

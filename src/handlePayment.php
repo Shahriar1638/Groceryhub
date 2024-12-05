@@ -59,6 +59,12 @@ if (isset($_POST['totalcost']) && isset($_POST['customeremail']) && isset($_POST
         $query = "UPDATE customers SET points = points + $points WHERE email = '$customeremail'";
         $result = mysqli_query($conn, $query);
         if ($result){
+            $query = "SELECT * FROM customers WHERE email = '$customeremail'";
+            $result = mysqli_query($conn, $query);
+            $row = mysqli_fetch_assoc($result);
+            $loyaltyPoints = $row['points'];
+            setcookie('loyaltyPoints', '', time() - 3600, "/");
+            setcookie('loyaltyPoints', $loyaltyPoints, time() + (86400 * 30), "/");
             header("Location: customerHome.php");
         } else {
             echo "Error: " . $query . "<br>" . mysqli_error($conn);
