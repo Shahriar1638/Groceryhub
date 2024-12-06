@@ -35,11 +35,12 @@
             <form method="post" class="my-10 flex items-center">
               <input class="px-6 py-2 rounded-md border border-solid" type="text" name="searchTerm" placeholder="Search for items..." required>
               <button type="submit" class="rounded-r-md px-4 py-2 bg-[#D2222D] text-white font-semibold" name="search">Search</button>
+              <button type="reset" class="ml-8" onclick="window.location.href='allItems.php';">Clear</button>
             </form>
             <div class="flex items-start justify-start mb-10 mr-6">
             <?php
               require_once('DBconnect.php');
-
+              $customeremail = $_COOKIE['email'];
               // Handle search query
               $searchResults = [];
               if (isset($_POST['search'])) {
@@ -83,6 +84,35 @@
                               <p class='text-white flex items-center gap-2'><i class='fa-solid fa-dollar-sign'></i><?php echo $productPrice ?></p>
                           </div>
                       </div>
+                      <div class="absolute bottom-4 right-6">
+                        <i onclick="document.getElementById('my_modal_1').setAttribute('open', 'true')" class="fa-solid fa-triangle-exclamation text-[#D2222D] text-3xl cursor-pointer"></i>
+                        <dialog id="my_modal_1" class="modal">
+                          <div class="modal-box">
+                            <h3 class="text-lg font-bold"><?php echo $customeremail; ?></h3>
+                            <textarea class="p-4 mt-4 -mb-4 w-full border border-solid border-gray-400 rounded-md" id="messageTextArea" name="message"></textarea>
+                            <div class="modal-action">
+                              <form method="dialog" class="flex items-center">
+                                <button class="btn mr-6" onclick="document.getElementById('my_modal_1').removeAttribute('open')">close</button>
+                                <button class="btn bg-green-400" onclick="handleReportSubmit('<?php echo $customeremail; ?>',)">Submit</button>
+                              </form>
+                            </div>
+                          </div>
+                        </dialog>
+                      </div>
+                    </div> 
+                    <form class="hidden" id="reportform" method="post" action="handleReportSubmit.php">
+                      <input type="text" name="email">
+                      <input type="text" name="message">
+                    </form>
+                    <script>
+                      function handleReportSubmit(email) {
+                        const msg = document.getElementById('messageTextArea').value;
+                        document.getElementById('reportform').elements['email'].value = email;
+                        document.getElementById('reportform').elements['message'].value = msg;
+                        document.getElementById('reportform').submit();
+                        document.getElementById('my_modal_1').removeAttribute('open')
+                      }
+                    </script>
                   </div> 
             <?php 
             }} else {
@@ -132,10 +162,38 @@
                     <h1 class='text-3xl font-bold text-white'><?php echo $productName?></h1>
                     <div class='flex flex-row items-center'>
                       <p class='text-white mr-4 flex items-center gap-2'><img class='w-4 h-4' src='../ICON/categories.png'><?php echo $productcategory ?></p>
-                      <p class='text-white flex items-center gap-2'><i class='fa-solid fa-dollar-sign'></i><?php echo $productPrice ?></p>
+                      <p class='text-white flex items-center gap-2'><i class='fa-solid fa-dollar-sign'></i><?php echo $productPrice ?>duck</p>
                     </div>
                   </div>
+                  <div class="absolute bottom-4 right-6">
+                    <i onclick="document.getElementById('my_modal_1').setAttribute('open', 'true')" class="fa-solid fa-triangle-exclamation text-[#D2222D] text-3xl cursor-pointer"></i>
+                    <dialog id="my_modal_1" class="modal">
+                      <div class="modal-box">
+                        <h3 class="text-lg font-bold"><?php echo $customeremail; ?></h3>
+                        <textarea class="p-4 mt-4 -mb-4 w-full border border-solid border-gray-400 rounded-md" id="messageTextArea" name="message"></textarea>
+                        <div class="modal-action">
+                          <form method="dialog" class="flex items-center">
+                            <button class="btn mr-6" onclick="document.getElementById('my_modal_1').removeAttribute('open')">close</button>
+                            <button class="btn bg-green-400" onclick="handleReportSubmit('<?php echo $customeremail; ?>',)">Submit</button>
+                          </form>
+                        </div>
+                      </div>
+                    </dialog>
+                  </div>
                 </div> 
+                <form class="hidden" id="reportform" method="post" action="handleReportSubmit.php">
+                  <input type="text" name="email">
+                  <input type="text" name="message">
+                </form>
+                <script>
+                  function handleReportSubmit(email) {
+                    const msg = document.getElementById('messageTextArea').value;
+                    document.getElementById('reportform').elements['email'].value = email;
+                    document.getElementById('reportform').elements['message'].value = msg;
+                    document.getElementById('reportform').submit();
+                    document.getElementById('my_modal_1').removeAttribute('open')
+                  }
+                </script>
                 <?php    
                   }
                 } else {
