@@ -24,52 +24,32 @@
 </head>
 <body class="bg-yellowPrimary">
     <header>
-      <nav class="h-24 px-40 flex justify-between items-center">
-        <div class="flex items-center">
-          <img class="h-16 w-16" src="../ICON/logo.png" alt="">
-          <h1 class="text-3xl font-bold ml-3">FreshBasket</h1>
-        </div>  
-        <?php
-            if(isset($_COOKIE['username'])) {
-                $username = $_COOKIE['username'];
-            } else {
-                echo "No username cookie set";
-            }
-            ?>
-        <div>
-          <h1 class="text-2xl font-semibold uppercase">Welcome to admin dashboard, <?php echo $username ?></h1>
-        </div>
-      </nav>
+      <?php include 'navbar2.php'; ?>
     </header>
     <main>
       <section class="pl-40 pt-4 h-screen">
         <div class="grid grid-cols-6">
           <div class="mt-16">
-            <div class="flex flex-col items-start">
-              <div class="flex items-center hover:text-redSecondary mb-6">
-                <i class="fa-regular fa-clipboard mr-2 text-lg"></i>
-                <a href="publishedItems.php" class="text-lg font-semibold uppercase">Published Items</a>
-              </div>
-              <div class="flex items-center hover:text-redSecondary mb-6">
-                <i class="fa-solid fa-hourglass-end mr-2"></i>
-                <a href='pendingItems.php' class="text-lg font-semibold uppercase">Pending Items</a>
-              </div>
-              <div class="flex items-center hover:text-redSecondary text-redSecondary">
-                <i class="fa-regular fa-address-card mr-2"></i>
-                <a href='adminRegister.php' class="text-lg font-semibold uppercase">Register a admin</a>
-              </div>
-            </div>
+            <?php include 'sidebar.php'; ?>
           </div>
           <div class="col-span-5 bg-white rounded-tl-3xl h-screen pl-12 pt-12">
             <div class="flex flex-col">
               <h1 class="text-4xl font-bold mb-6 uppercase">Register new admin informations</h1>
               <form action="handleSignupAdmin.php" method="post">
                 <div class="flex flex-col space-y-6 mb-4">
-                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-96" type="text" name="username" placeholder="Enter admin username......" required>
-                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-96" type="email" name="email" placeholder="Enter admin email......" required>
-                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-96" type="password" name="password" placeholder="set admin userpassword......" required>
+                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-[50rem]" type="text" name="username" placeholder="Enter admin username......" required>
+                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-[50rem]" type="email" name="email" placeholder="Enter admin email......" required>
+                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-[50rem]" type="password" name="password" placeholder="set admin userpassword......" required>
+                  <select class="px-6 py-2 rounded-md border border-solid border-gray-400 w-[50rem]" name="gender" required>
+                    <option value="" disabled selected>Select gender...</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-[50rem]" type="text" name="phone" placeholder="Enter admin phone number......" required>
+                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-[50rem]" type="text" name="address" placeholder="Enter admin address......" required>
+                  <input class="px-6 py-2 rounded-md border border-solid border-gray-400 w-[50rem]" type="url" name="profileurl" placeholder="Enter admin profile URL......" required>
                 </div>
-                <input type="submit" value="Sign up" class="px-6 py-2 bg-greenSecondary font-bold uppercase rounded-md text-white cursor-pointer transition duration-300 ease-in">
+                <input type="submit" value="Sign up" class="px-6 py-2 w-[50rem] bg-greenSecondary font-bold uppercase rounded-md text-white cursor-pointer transition duration-300 ease-in">
               </form>
             </div>
           </div>

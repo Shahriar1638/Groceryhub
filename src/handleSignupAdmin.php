@@ -1,11 +1,15 @@
 <?php 
 require('DBconnect.php');
-if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
+if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['phone']) && isset($_POST['address']) && isset($_POST['profileurl'])) {
     $role = 'admin';
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $sql = "INSERT INTO users (role, username, email, password) VALUES ('$role', '$username', '$email', '$password')";
+    $gender = $_POST['gender'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $profileurl = $_POST['profileurl'];
+    $sql = "INSERT INTO users (role, username, email, password, phone_number, gender, profileurl, address) VALUES ('$role', '$username', '$email', '$password', '$phone', '$gender', '$profileurl', '$address')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         $salary = 0;

@@ -24,43 +24,14 @@
 </head>
 <body class="bg-yellowPrimary">
     <header>
-      <nav class="h-24 px-40 flex justify-between items-center">
-        <div class="flex items-center">
-          <img class="h-16 w-16" src="../ICON/logo.png" alt="">
-          <h1 class="text-3xl font-bold ml-3">FreshBasket</h1>
-        </div>  
-        <?php
-            if(isset($_COOKIE['userID'])) {
-                $username = $_COOKIE['username'];
-            } else {
-                echo "No username cookie set";
-            }
-            ?>
-        <div>
-          <h1 class="text-2xl font-semibold uppercase">Welcome to admin dashboard, <?php echo $username ?></h1>
-        </div>
-      </nav>
+      <?php include 'navbar2.php'; ?>
     </header>
     <main>
       <section class="pl-40 pt-4 h-screen">
         <div class="grid grid-cols-6">
           <div class="mt-16">
-            <div class="flex flex-col items-start">
-              <div class="flex items-center hover:text-redSecondary mb-6 text-redSecondary">
-                <i class="fa-regular fa-clipboard mr-2 text-lg"></i>
-                <a href="publishedItems.php" class="text-lg font-semibold uppercase">Published Items</a>
-              </div>
-              <div class="flex items-center hover:text-redSecondary mb-6">
-                <i class="fa-solid fa-hourglass-end mr-2"></i>
-                <a href='pendingItems.php' class="text-lg font-semibold uppercase">Pending Items</a>
-              </div>
-              <div class="flex items-center hover:text-redSecondary">
-                <i class="fa-regular fa-address-card mr-2"></i>
-                <a href='adminRegister.php' class="text-lg font-semibold uppercase">Register a admin</a>
-              </div>
-            </div>
+            <?php include 'sidebar.php'; ?>
           </div>
-          <!-- suchitra start -->
           <div class="col-span-5 bg-white rounded-tl-3xl h-screen pl-12 pt-12">
             <div>
               <h1 class="text-4xl font-bold uppercase text-center mb-8">Current published products</h1>
@@ -100,7 +71,6 @@
               </table>
             </div>
           </div>
-          <!-- suchitra end -->
         </div>
       </section>
     </main>
