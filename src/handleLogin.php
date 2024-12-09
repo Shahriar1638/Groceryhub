@@ -17,6 +17,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
             $revenue = $row['revenue'];
+            setcookie('loyaltyPoints', '', time() + (86400 * 30), "/");
             setcookie('revenue', '', time() + (86400 * 30), "/");
             setcookie('revenue', $revenue, time() + (86400 * 30), "/");
         }
@@ -30,6 +31,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
             $loyaltyPoints = $row['points'];
+            setcookie('revenue', '', time() + (86400 * 30), "/");
             setcookie('loyaltyPoints', '', time() + (86400 * 30), "/");
             setcookie('loyaltyPoints', $loyaltyPoints, time() + (86400 * 30), "/");
         }

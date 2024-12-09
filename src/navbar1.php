@@ -65,7 +65,7 @@
                     }
                 ?>
                 <i class='fa-solid fa-user mr-2 text-2xl'></i>
-                <h1 class='text-xl font-semibold uppercase mr-4'><?php echo $username ?></h1>
+                <h1 class='text-xl font-semibold uppercase mr-4'><a href='profile.php'><?php echo $username ?></a></h1>
                 <button onclick='handleSignout()' class='bg-[#D2222D] text-white block px-6 py-3 rounded-md uppercase font-semibold'>logout</button>
             </div>
         <?php
