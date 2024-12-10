@@ -136,6 +136,7 @@
                     $productcategory = $row['category'];
                     $productid = $row['productId'];
                     $productAmmount = explode(",",$row['ammount']);
+                    $productRating = (int)$row['rating'];
                     if($productAmmount[0] == 'wp') {
                       $ammountType= 'Pounds';
                     } else if ($productAmmount[0] == 'wk') {
@@ -145,8 +146,23 @@
                     }
                 ?>
                 <!-- CARD -->
-                <div class='w-full h-60 rounded-lg relative' style='background-image: linear-gradient(to top,rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2)),url(<?php echo $productImage?>); background-size: cover; background-repeat: no-repeat;'>
-                  <div class='absolute top-4 right-6'>
+                <div class='w-full h-72 rounded-lg relative' style='background-image: linear-gradient(to top,rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2)),url(<?php echo $productImage?>); background-size: cover; background-repeat: no-repeat;'>
+                  <div class='flex items-center absolute top-4 right-6'>
+                    <div class="mr-4">
+                      <?php
+                        $sql = "SELECT * FROM wishlist WHERE productId = '$productid' AND customer_email = '$customeremail'";
+                        $wishlistResult = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($wishlistResult) > 0) {
+                          ?>
+                          <i class="fa-solid fa-heart text-4xl text-[#2aff2a] cursor-pointer"></i>
+                      <?php
+                        } else {
+                          ?>
+                          <i onclick="handleWishlist('<?php echo $productid ?>', '<?php echo $customeremail ?>')" class="fa-solid fa-heart text-4xl text-white hover:text-[#FFBF00] cursor-pointer"></i>
+                      <?php
+                        }
+                      ?>
+                    </div>
                     <div class="dropdown dropdown-end">
                       <div tabindex="0" role="button" class="m-1"><i class='fa-solid fa-cart-plus text-4xl text-white hover:text-[#FFBF00] hover pointer'></i></div>
                       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -160,10 +176,41 @@
                   </div>
                   <div class='flex flex-col justify-start absolute bottom-4 left-6'>
                     <h1 class='text-3xl font-bold text-white'><?php echo $productName?></h1>
-                    <div class='flex flex-row items-center'>
+                    <div class='flex flex-row items-center mb-2'>
                       <p class='text-white mr-4 flex items-center gap-2'><img class='w-4 h-4' src='../ICON/categories.png'><?php echo $productcategory ?></p>
                       <p class='text-white flex items-center gap-2'><i class='fa-solid fa-dollar-sign'></i><?php echo $productPrice ?>duck</p>
                     </div>
+                    <div onclick="document.getElementById('rating_modal_<?php echo $productid; ?>').showModal()" class='flex items-center cursor-pointer'> 
+                      <?php for ($i = 1; $i <= 5; $i++): ?> <?php if ($i <= $productRating): ?> 
+                        <i class="fa-solid fa-star text-yellow-500"></i> 
+                        <?php else: ?> 
+                          <i class="fa-solid fa-star text-gray-400"></i> 
+                          <?php endif; ?> 
+                      <?php endfor; ?> 
+                     </div>
+
+                      <!-- Add this inside your product card -->
+                      <dialog id="rating_modal_<?php echo $productid; ?>" class="modal"> 
+                        <div class="modal-box"> 
+                          <h3 class="text-lg font-bold">Rate Product</h3> 
+                          <form action="handleSubmitRating.php" method="post"> 
+                            <input type="hidden" name="productId" value="<?php echo $productid; ?>"> 
+                            <input type="hidden" name="customerEmail" value="<?php echo $customeremail; ?>"> 
+                            <div class="flex items-center"> 
+                              <?php for ($i = 1; $i <= 5; $i++): ?> 
+                                <input class="mr-1" type="radio" id="star<?php echo $i; ?>-<?php echo $productid; ?>" name="rating" value="<?php echo $i; ?>" <?php if ($i == $productRating) echo 'checked'; ?>> 
+                              <!-- <label for="star<?php echo $i; ?>-<?php echo $productid; ?>">
+                                <i class="fa-solid fa-star"></i>
+                              </label>  -->
+                              <?php endfor; ?> 
+                            </div> 
+                            <div class="modal-action"> 
+                              <button type="submit" class="btn bg-green-400">Submit Rating</button> <button type="button" class="btn" onclick="document.getElementById('rating_modal_<?php echo $productid; ?>').close()">Close</button> 
+                            </div> 
+                          </form> 
+                        </div> 
+                      </dialog>
+
                   </div>
                   <div class="absolute bottom-4 right-6">
                     <i onclick="document.getElementById('my_modal_1').setAttribute('open', 'true')" class="fa-solid fa-triangle-exclamation text-[#D2222D] text-3xl cursor-pointer"></i>
@@ -210,6 +257,29 @@
                     <input type="text" name="selleremail">
                   </form>
                 </div>
+                <script>
+                      function handleWishlist(productid, customeremail) {
+                        const form = document.createElement('form');
+                        form.method = 'post';
+                        form.action = 'handleWishlist.php';
+                        form.style.display = 'none';
+
+                        const inputProductId = document.createElement('input');
+                        inputProductId.type = 'hidden';
+                        inputProductId.name = 'productid';
+                        inputProductId.value = productid;
+                        form.appendChild(inputProductId);
+
+                        const inputCustomerEmail = document.createElement('input');
+                        inputCustomerEmail.type = 'hidden';
+                        inputCustomerEmail.name = 'customeremail';
+                        inputCustomerEmail.value = customeremail;
+                        form.appendChild(inputCustomerEmail);
+
+                        document.body.appendChild(form);
+                        form.submit();
+                      }
+                    </script>
                 <script>
                   function handleForm(productName, productPrice, customeremail, productid, productAmmount, selleremail) {
                     document.getElementById('addForm').elements['productname'].value = productName;

@@ -73,7 +73,19 @@
             </div>
         </section>
         <section>
-
+            
+            <?php
+            require_once('DBconnect.php');
+            $role = $_COOKIE['role'];
+            if ($role == 'customer') {
+                ?>
+                <div>
+                    <h1 class="text-5xl font-extrabold uppercase"> Your wishlist</h1>
+                </div>
+                <?php
+                include 'Wishlist.php';
+            } 
+            ?>
         </section>
     </main>
 </body>
