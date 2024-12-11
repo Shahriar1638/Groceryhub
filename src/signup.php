@@ -41,6 +41,14 @@
                 <input class="px-6 py-2 rounded-md border border-solid w-96 mb-3" type="email" name="email" placeholder="Enter your email......" required>
                 <input class="px-6 py-2 rounded-md border border-solid w-96 mb-3" type="password" name="password" placeholder="Enter your userpassword......" required>
               </div>
+              <select class="select w-full max-w-96 mb-3" name="gender" required>
+                <option disabled selected>Select Gender</option>
+                <option>male</option>
+                <option>female</option>
+              </select>
+              <input class="px-6 py-2 rounded-md border border-solid w-96 mb-3" type="tel" name="phone" placeholder="Enter your phone number......" required>
+              <input class="px-6 py-2 rounded-md border border-solid w-96 mb-3" type="text" placeholder="Enter your profile phot url......" name="photourl" required>
+              <textarea class="px-6 py-2 rounded-md border border-solid w-96 mb-3" name="address" placeholder="Enter your address......" required></textarea>
               <input type="submit" value="Sign up" class="px-6 py-2 bg-greenSecondary font-bold uppercase rounded-md text-white cursor-pointer transition duration-300 ease-in">
             </form>
             <div class="my-2">

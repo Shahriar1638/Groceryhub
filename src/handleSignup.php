@@ -5,7 +5,12 @@ if (isset($_POST['role']) && isset($_POST['username']) && isset($_POST['email'])
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $sql = "INSERT INTO users (role, username, email, password) VALUES ('$role', '$username', '$email', '$password')";
+    $gender = $_POST['gender'];
+    $photourl = $_POST['photourl'];
+    $address = $_POST['address'];
+    $phone = $_POST['phone'];
+    $banstatus = '1';
+    $sql = "INSERT INTO users (role, username, email, password, phone_number, gender, profileurl, address, ban_status ) VALUES ('$role', '$username', '$email', '$password', '$phone', '$gender', '$photourl', '$address', '$banstatus')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         if ($role == 'customer') {

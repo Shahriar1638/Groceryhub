@@ -60,8 +60,14 @@
                           $ammountType= 'Pounds';
                       } else if ($productAmmount[0] == 'wk') {
                           $ammountType= 'Kg';
+                      } else if ($productAmmount[0] == 'wg') {
+                          $ammountType= 'Grams';
                       } else if ($productAmmount[0] == 'p') {
                           $ammountType= 'Pieces';
+                      } else if ($productAmmount[0] == 'l') {
+                          $ammountType= 'Litres';
+                      } else if ($productAmmount[0] == 'ml') {
+                          $ammountType= 'Millilitres';
                       }
              ?>
              <!-- search card design -->
@@ -152,8 +158,14 @@
                                 $ammountType = 'Pounds';
                             } else if ($productAmmount[0] == 'wk') {
                                 $ammountType = 'Kg';
+                            } else if ($productAmmount[0] == 'wg') {
+                                $ammountType = 'Grams';
                             } else if ($productAmmount[0] == 'p') {
                                 $ammountType = 'Pieces';
+                            } else if ($productAmmount[0] == 'l') {
+                                $ammountType = 'Litres';
+                            } else if ($productAmmount[0] == 'ml') {
+                                $ammountType = 'Millilitres';
                             }
             ?>
                             <!-- CARD -->

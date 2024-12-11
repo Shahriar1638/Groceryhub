@@ -9,8 +9,10 @@ if (isset($_POST['productName']) && isset($_POST['productPrice']) && isset($_POS
     $productImage = $_POST['productImage'];
     $sellcount = 0;
     $publishdate = date("Y-m-d");
+    $rating = 0;
+    $numOfPeople = 0;
     $status = "pending";
-    $query = "INSERT INTO products (name, imgurl, price, ammount, publishdate, selleremail, sellcount, category, status) VALUES ('$productName', '$productImage', '$productPrice', '$productAmount', '$publishdate', '$sellerEmail', '$sellcount', '$productCategory', '$status')";
+    $query = "INSERT INTO products (name, imgurl, price, ammount, publishdate, selleremail, cartcount, category, status) VALUES ('$productName', '$productImage', '$productPrice', '$productAmount', '$publishdate', '$sellerEmail', '$sellcount', '$productCategory', '$status')";
     $result = mysqli_query($conn, $query);
     if ($result){
         header("Location: addProducts.php");

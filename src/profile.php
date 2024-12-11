@@ -72,21 +72,37 @@
                 </div>
             </div>
         </section>
-        <section>
-            
-            <?php
-            require_once('DBconnect.php');
-            $role = $_COOKIE['role'];
-            if ($role == 'customer') {
-                ?>
-                <div>
-                    <h1 class="text-5xl font-extrabold uppercase"> Your wishlist</h1>
-                </div>
-                <?php
-                include 'Wishlist.php';
-            } 
-            ?>
+        <section class="my-40">
+            <div class="tabs text-4xl mb-10">
+                <button class="tab tab-lifted font-bold cursor-pointer tab-active" style="font-size: inherit" onclick="openTab(event, 'wishlist')">Wishlist</button>
+                <button class="tab tab-lifted font-bold cursor-pointer" style="font-size: inherit" onclick="openTab(event, 'deliveryProgress')">Delivery Progress</button>
+            </div>
+            <div id="wishlist" class="tab-content" style="display:block;">
+                <?php include 'Wishlist.php'; ?>
+            </div>
+            <div id="deliveryProgress" class="tab-content" style="display:none;">
+                <?php include 'deliveryprogress.php'; ?>
+            </div>
         </section>
+        <script>
+            window.onload = function() {
+                document.querySelector('[onclick="openTab(event, \'wishlist\')"]').className += " tab-active";
+            }
+            
+            function openTab(evt, tabName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tab-content");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" tab-active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+                evt.currentTarget.className += " tab-active";
+            }
+        </script>
     </main>
 </body>
 </html>
