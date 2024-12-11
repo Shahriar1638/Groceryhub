@@ -245,7 +245,7 @@
                                             <div class="modal-action">
                                                 <form method="dialog" class="flex items-center">
                                                     <button class="btn mr-6" onclick="document.getElementById('my_modal_1').removeAttribute('open')">close</button>
-                                                    <button class="btn bg-green-400" onclick="handleReportSubmit('<?php echo $customeremail; ?>',)">Submit</button>
+                                                    <button class="btn bg-green-400" onclick="handleReportSubmit('<?php echo $customeremail; ?>','<?php echo $selleremail; ?>')">Submit</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -255,12 +255,14 @@
                             <form class="hidden" id="reportform" method="post" action="handleReportSubmit.php">
                                 <input type="text" name="email">
                                 <input type="text" name="message">
+                                <input type="text" name="selleremail">
                             </form>
                             <script>
-                                function handleReportSubmit(email) {
+                                function handleReportSubmit(email, selleremail) {
                                     const msg = document.getElementById('messageTextArea').value;
                                     document.getElementById('reportform').elements['email'].value = email;
                                     document.getElementById('reportform').elements['message'].value = msg;
+                                    document.getElementById('reportform').elements['selleremail'].value = selleremail;
                                     document.getElementById('reportform').submit();
                                     document.getElementById('my_modal_1').removeAttribute('open')
                                 }
