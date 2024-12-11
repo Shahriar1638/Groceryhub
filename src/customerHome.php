@@ -37,6 +37,7 @@
         <div class="my-56 px-60">
           <h1 class="my-16 text-5xl font-extrabold text-center"><i class="fa-solid fa-chart-line text-5xl mr-4"></i>Top selling products</h1>
           <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" space-between="30" slides-per-view="3">
+            <!-- back end data fetch -->
           <?php
             require('DBconnect.php');
             $query = "SELECT * FROM products ORDER BY cartcount DESC LIMIT 6";
