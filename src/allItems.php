@@ -71,10 +71,12 @@
                       }
              ?>
              <!-- search card design -->
-                  <div class='w-80 h-60 rounded-lg relative' style='background-image: linear-gradient(to top,rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2)),url(<?php echo $productImage?>); background-size: cover; background-repeat: no-repeat;'>
+                  <div class='w-[30rem] h-60 rounded-lg relative' style='background-image: linear-gradient(to top,rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2)),url(<?php echo $productImage?>); background-size: cover; background-repeat: no-repeat;'>
                       <div class='absolute top-4 right-6'>
                           <div class="dropdown dropdown-end">
+                              <?php if ($_COOKIE['role'] != 'seller'): ?>
                               <div tabindex="0" role="button" class="m-1"><i class='fa-solid fa-cart-plus text-4xl text-white hover:text-[#FFBF00] hover pointer'></i></div>
+                              <?php endif; ?>
                               <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                   <li onclick="handleForm('<?php echo $productName ?>', '<?php echo $productPrice ?>','<?php echo $customeremail ?>','<?php echo $productid ?>','<?php echo $productAmmount[1] ?>','<?php echo $selleremail ?>')">
                                       <a><?php echo $productAmmount[1] . ' ' . $ammountType?></a>
@@ -172,6 +174,7 @@
                             <div class='w-full h-72 rounded-lg relative' style='background-image: linear-gradient(to top,rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2)),url(<?php echo $productImage ?>); background-size: cover; background-repeat: no-repeat;'>
                                 <div class='flex items-center absolute top-4 right-6'>
                                     <!-- Wishlist button -->
+                                    <?php if ($_COOKIE['role'] != 'seller'): ?>
                                     <div class="mr-4">
                                         <?php
                                         $sql = "SELECT * FROM wishlist WHERE productId = '$productid' AND customer_email = '$customeremail'";
@@ -198,6 +201,7 @@
                                             <li onclick="handleForm('<?php echo $productName ?>', '<?php echo $productPrice ?>','<?php echo $customeremail ?>','<?php echo $productid ?>','<?php echo $productAmmount[3] ?>','<?php echo $selleremail ?>')"><a><?php echo $productAmmount[3] . ' ' . $ammountType ?></a></li>
                                         </ul>
                                     </div>
+                                    <?php endif; ?>
                                 </div>
                                 <!-- card body design -->
                                 <div class='flex flex-col justify-start absolute bottom-4 left-6'>
@@ -217,6 +221,7 @@
                                     </div>
 
                                     <!-- rating pop up panel -->
+                                    <?php if ($_COOKIE['role'] != 'seller'): ?>
                                     <dialog id="rating_modal_<?php echo $productid; ?>" class="modal">
                                         <div class="modal-box">
                                             <h3 class="text-lg font-bold">Rate Product</h3>
@@ -234,6 +239,7 @@
                                             </form>
                                         </div>
                                     </dialog>
+                                    <?php endif; ?>
                                 </div>
                                 <!-- report form -->
                                 <div class="absolute bottom-4 right-6">

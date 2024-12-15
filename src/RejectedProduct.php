@@ -7,6 +7,7 @@
     <!-- design plugs -->
     <script src="https://kit.fontawesome.com/5f28ebb90a.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -22,15 +23,15 @@
       }
     </script>
 </head>
-<body class="bg-yellowPrimary">
+<body>
     <header>
-      <?php include 'navbar2.php'; ?>
+      <?php include 'navbar1.php'; ?>
     </header>
     <main>
       <section class="pl-40 pt-4 h-screen">
         <div class="grid grid-cols-6">
           <div class="mt-16">
-            <?php include 'sidebar.php'; ?>
+            <?php include 'sidebar2.php'; ?>
           </div>
           <div class="col-span-5 bg-white rounded-tl-3xl h-screen pl-12 pt-12">
             <div>
@@ -40,32 +41,29 @@
               <table class='table'>
                   <thead>
                       <tr>
+                          <th class="uppercase">Product ID</th>
                           <th class="uppercase">Product Name</th>
                           <th class="uppercase">Product Price</th>
-                          <th class="uppercase">sellername</th>
-                          <th class="uppercase">status</th>
                           <th class="uppercase">Action</th>
                       </tr>
                   </thead>
                   <tbody>
                   <?php 
                     require_once('DBconnect.php');
-                    $query = "SELECT * FROM products where status = 'pending'";
+                    $useremail = $_COOKIE['email'];
+                    $query = "SELECT * FROM products where status = 'rejected' and selleremail = '$useremail'";
                     $result = mysqli_query($conn, $query);
                     if (mysqli_num_rows($result) > 0){
                         while ($row = mysqli_fetch_assoc($result)){
                             $productid = $row['productId'];
                             $productname = $row['name'];
                             $productprice = $row['price'];
-                            $productseller = $row['selleremail'];
-                            $productStatus = $row['status'];
                             ?>
                               <tr>
+                                <td><?php echo $productid ?></td>
                                 <td><?php echo $productname ?></td>
                                 <td><?php echo $productprice ?></td>
-                                <td><?php echo $productseller ?></td>
-                                <td><?php echo $productStatus ?></td>
-                                <td><button onclick="handleStatus('<?php echo $productid ?>','<?php echo $productStatus ?>','reject')">reject</button>||<button onclick="handleStatus('<?php echo $productid ?>','<?php echo $productStatus ?>','published')">approve</button></td>
+                                <td><button onclick="handleStatus('<?php echo $productid ?>')">remove</button></td>
                               </tr>
                     <?php
                           }
@@ -74,18 +72,27 @@
               </table>
             </div>
             <div class="hidden">
-              <form action="handleStatusPending.php" id='statusForm' method="post">
-                <input type="text" name="action">
+              <form action="handleRemoveProduct.php" id='statusForm' method="post">
                 <input type="text" name="productid">
-                <input type="text" name="productstatus">
               </form>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
-              function handleStatus(productid, productstatus, action){
-                document.getElementById('statusForm').elements['action'].value = action;
-                document.getElementById('statusForm').elements['productid'].value = productid;
-                document.getElementById('statusForm').elements['productstatus'].value = productstatus;
-                document.getElementById('statusForm').submit();
+              function handleStatus(productid){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "The product will be removed from the list",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, remove it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('statusForm').elements['productid'].value = productid;
+                        document.getElementById('statusForm').submit();
+                    }
+                });
               }
             </script>
           </div>
