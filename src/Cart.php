@@ -83,30 +83,56 @@
                 </tbody>
           </table>
         </div>
-
+        <?php
+        require_once('DBconnect.php');
+        $useremail = $_COOKIE['email'];
+        $query = "SELECT * FROM customers WHERE email = '$useremail'";
+        $result = mysqli_query($conn, $query);
+        if (mysqli_num_rows($result) > 0) {
+          $row = mysqli_fetch_assoc($result);
+          $points = $row['points'];
+          $discount = 0.00;
+          $finalPrice = $totalCost;
+        }
+        ?>
+        <!-- increament button -->
         <div class="my-20">
-          <?php
-          require_once('DBconnect.php');
-          $useremail = $_COOKIE['email'];
-          $query = "SELECT * FROM customers WHERE email = '$useremail'";
-          $result = mysqli_query($conn, $query);
-          if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $points = $row['points'];
-            if ($points >= 100) {
-              $discount = 0.10;
-              $finalPrice = $totalCost - ($totalCost * $discount);
-            } else {
-              $discount = 0;
-              $finalPrice = $totalCost;
-            }}
-          ?>
+          <h1 class="text-center font-semibold mb-4 text-2xl"> Redeem Loyalty points</h1>
+          <div class="flex items-center justify-center mb-4">
+            <button onclick="adjustPoints(-100)" class="text-white font-bold uppercase text-lg px-6 py-2 rounded-lg bg-redSecondary">-</button>
+            <span id="loyaltyPoints" class="mx-4 text-2xl font-semibold">0</span>
+            <button onclick="adjustPoints(100)" class="text-white font-bold uppercase text-lg px-6 py-2 rounded-lg bg-greenSecondary">+</button>
+          </div>
           <div>
-            <h1 class="text-2xl font-semibold">Total Cost: $<?php echo $totalCost; ?></h1>
-            <h1 class="text-2xl font-semibold">Discount: $<?php echo ($totalCost * $discount); ?></h1>
-            <h1 class="text-2xl font-semibold">Total payment: $<?php echo $finalPrice; ?></h1>
+            <h1 class="text-2xl font-semibold">Total Cost: $<span id="totalCost"><?php echo $totalCost; ?></span></h1>
+            <h1 class="text-2xl font-semibold">Discount: $<span id="discount"><?php echo ($totalCost * $discount); ?></span></h1>
+            <h1 class="text-2xl font-semibold">Total payment: $<span id="finalPrice"><?php echo $finalPrice; ?></span></h1>
           </div>
         </div>
+
+        <script>
+          let points = <?php echo $points; ?>;
+          let totalCost = <?php echo $totalCost; ?>;
+          let discount = <?php echo $discount; ?>;
+          let finalPrice = <?php echo $finalPrice; ?>;
+          let loyaltyPoints = 0;
+
+          function adjustPoints(value) {
+            if (loyaltyPoints + value >= 0 && loyaltyPoints + value <= Math.min(points, 300)) {
+              loyaltyPoints += value;
+              document.getElementById('loyaltyPoints').innerText = loyaltyPoints;
+              updatePrices();
+            }
+          }
+
+          function updatePrices() {
+            let additionalDiscount = loyaltyPoints / 1000 * totalCost;
+            let newDiscount = (totalCost * discount) + additionalDiscount;
+            let newFinalPrice = totalCost - newDiscount;
+            document.getElementById('discount').innerText = newDiscount.toFixed(2);
+            document.getElementById('finalPrice').innerText = newFinalPrice.toFixed(2);
+          }
+        </script>
 
         <!-- Payment card -->
 

@@ -42,7 +42,7 @@
                         <?php 
                         require_once('DBconnect.php');
                         $useremail = $_COOKIE['email']; 
-                        $query = "SELECT * FROM payment WHERE email = '$useremail'";
+                        $query = "SELECT * FROM payment WHERE email = '$useremail' ORDER BY payment_date DESC";
                         $result = mysqli_query($conn, $query);
                         if (mysqli_num_rows($result) > 0){
                             while ($row = mysqli_fetch_assoc($result)){
