@@ -94,6 +94,24 @@
             ?>
             </swiper-container>
           <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+          <section>
+            <div class="my-24 px-60">
+              <h1 class="my-16 text-5xl font-extrabold text-center"><i class="fa-solid fa-comments text-5xl mr-4"></i>Feedback</h1>
+              <form action="../controler/handleFeedbackSend.php" method="POST" class="flex flex-col items-center">
+                <div class="mb-4 w-full">
+                  <label for="email" class="block text-lg font-medium text-gray-700">Your Email</label>
+                  <input type="email" id="email" name="email" value="<?php echo $_COOKIE['email']; ?>" readonly class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-yellowPrimary focus:border-yellowPrimary sm:text-sm">
+                </div>
+                <div class="mb-4 w-full">
+                  <label for="feedback" class="block text-lg font-medium text-gray-700">Your Feedback</label>
+                  <textarea id="feedback" name="feedback" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-yellowPrimary focus:border-yellowPrimary sm:text-sm" placeholder="Write your feedback here..."></textarea>
+                </div>
+                <button type="submit" class="px-6 py-2 bg-yellowPrimary text-white font-bold rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellowPrimary">
+                  <i class="fa-solid fa-paper-plane mr-2"></i>Send Feedback
+                </button>
+              </form>
+            </div>
+          </section>
         </div>
       </section>
     </main>

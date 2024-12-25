@@ -34,60 +34,46 @@
           </div>
           <div class="col-span-5 bg-white rounded-tl-3xl h-screen pl-12 pt-12">
             <div>
-              <h1 class="text-4xl font-bold uppercase text-center mb-8">Current pending products</h1>
+              <h1 class="text-4xl font-bold uppercase text-center mb-8">User feedbacks</h1>
             </div>
-            <div class='overflow-x-auto'>
-              <table class='table'>
+            <div>
+
+            </div>
+            <div>
+              <?php
+              require 'dbconnect.php';
+
+              $query = "SELECT email, message, time FROM feedbacks";
+              $result = $conn->query($query);
+
+              if ($result->num_rows > 0) {
+                ?>
+                <table class="table-auto w-[70rem] text-left border-none">
                   <thead>
-                      <tr>
-                          <th class="uppercase">Product Name</th>
-                          <th class="uppercase">Product Price</th>
-                          <th class="uppercase">sellername</th>
-                          <th class="uppercase">status</th>
-                          <th class="uppercase">Action</th>
-                      </tr>
+                    <tr>
+                      <th class="px-4 py-2">Email</th>
+                      <th class="px-4 py-2">Message</th>
+                      <th class="px-4 py-2">Time</th>
+                    </tr>
                   </thead>
-                  <tbody>
-                  <?php 
-                    require_once('DBconnect.php');
-                    $query = "SELECT * FROM products where status = 'pending'";
-                    $result = mysqli_query($conn, $query);
-                    if (mysqli_num_rows($result) > 0){
-                        while ($row = mysqli_fetch_assoc($result)){
-                            $productid = $row['productId'];
-                            $productname = $row['name'];
-                            $productprice = $row['price'];
-                            $productseller = $row['selleremail'];
-                            $productStatus = $row['status'];
-                            ?>
-                              <tr>
-                                <td><?php echo $productname ?></td>
-                                <td><?php echo $productprice ?></td>
-                                <td><?php echo $productseller ?></td>
-                                <td><?php echo $productStatus ?></td>
-                                <td><button onclick="handleStatus('<?php echo $productid ?>','<?php echo $productStatus ?>','reject')">reject</button>||<button onclick="handleStatus('<?php echo $productid ?>','<?php echo $productStatus ?>','approve')">approve</button></td>
-                              </tr>
-                    <?php
-                          }
-                    }?>
-                  </tbody>
-              </table>
-            </div>
-            <div class="hidden">
-              <form action="../controler/handleStatusPending.php" id='statusForm' method="post">
-                <input type="text" name="action">
-                <input type="text" name="productid">
-                <input type="text" name="productstatus">
-              </form>
-            </div>
-            <script>
-              function handleStatus(productid, productstatus, action){
-                document.getElementById('statusForm').elements['action'].value = action;
-                document.getElementById('statusForm').elements['productid'].value = productid;
-                document.getElementById('statusForm').elements['productstatus'].value = productstatus;
-                document.getElementById('statusForm').submit();
+                <tbody>
+                <?php
+                while ($row = $result->fetch_assoc()) {
+                  ?>
+                  <tr>
+                    <td class="px-4 py-2"><?php echo htmlspecialchars($row['email']) ?></td>
+                    <td class="px-4 py-2"><?php echo htmlspecialchars($row['message']) ?></td>
+                    <td class="px-4 py-2"><?php echo htmlspecialchars($row['time']) ?></td>
+                  </tr>
+                  <?php
+                }
+                echo '</tbody>';
+                echo '</table>';
+              } else {
+                echo '<p class="text-center font-bold text-5xl">No feedbacks found.</p>';
               }
-            </script>
+              ?>
+            </div>
           </div>
         </div>
       </section>
