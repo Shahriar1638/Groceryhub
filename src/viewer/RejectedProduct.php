@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshBasket</title>
+    <title>Groceryhub</title>
     <!-- design plugs -->
     <script src="https://kit.fontawesome.com/5f28ebb90a.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />

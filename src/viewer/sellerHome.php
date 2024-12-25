@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshBasket</title>
+    <title>Groceryhub</title>
     <!-- design plugs -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://kit.fontawesome.com/5f28ebb90a.js" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
     <main>
       <section class="h-80">
         <div class="bg-cover bg-center h-96" style="background-image: linear-gradient(to bottom right,rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)),url(../ICON/banner.jpg);">
-          <h1 class="text-7xl font-bold text-center py-10 text-white">Welcome to FreshBasket</h1>
+          <h1 class="text-7xl font-bold text-center py-10 text-white">Welcome to Groceryhub</h1>
           <p class="text-center text-white text-lg">Your one stop shop for all your grocery needs</p>
         </div>
       </section>

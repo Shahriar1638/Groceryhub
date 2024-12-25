@@ -49,15 +49,15 @@ if(isset($_POST['email']) && isset($_POST['password'])){
         
         // -----------
         
-        if ($role == 'seller'){
-            header("Location: ../viewer/sellerHome.php");
+        if ($role == 'seller' || $role == 'customer'){
+            header("Location: ../viewer/Homepage.php");
         }
         else if ($role == 'admin'){
             header("Location: ../viewer/publishedItems.php");
         }
-        else if ($role == 'customer'){
-            header("Location: ../viewer/customerHome.php");
-        }
+        // else if ($role == 'customer'){
+        //     header("Location: ../viewer/customerHome.php");
+        // }
     }
     else{
         header("Location: ../viewer/login.php");

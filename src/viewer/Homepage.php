@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshBasket</title>
+    <title>Groceryhub</title>
     <!-- design plugs -->
     <script src="https://kit.fontawesome.com/5f28ebb90a.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
@@ -28,8 +28,8 @@
     </header>
     <main>
       <section class="h-80">
-        <div class="bg-cover bg-center h-[30rem]" style="background-image: linear-gradient(to bottom right,rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)),url(../ICON/banner.jpg);">
-          <h1 class="text-7xl font-bold text-center py-10 text-white">Welcome to FreshBasket</h1>
+        <div class="bg-cover bg-center h-[30rem]" style="background-image: linear-gradient(to bottom right,rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)),url(../../ICON/banner.jpg);">
+          <h1 class="text-7xl font-bold text-center py-10 text-white">Welcome to Groceryhub</h1>
           <p class="text-center text-white text-lg">Your one stop shop for all your grocery needs</p>
         </div>
       </section>
@@ -37,7 +37,6 @@
         <div class="my-56 px-60">
           <h1 class="my-16 text-5xl font-extrabold text-center"><i class="fa-solid fa-chart-line text-5xl mr-4"></i>Top selling products</h1>
           <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" space-between="30" slides-per-view="3">
-            <!-- back end data fetch -->
           <?php
             require('DBconnect.php');
             $query = "SELECT * FROM products ORDER BY cartcount DESC LIMIT 6";
