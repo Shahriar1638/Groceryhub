@@ -10,7 +10,11 @@ if(isset($_POST['email']) && isset($_POST['password'])){
         $role = $row['role'];
         $username = $row['username']; 
         $email = $row['email'];
-
+        $ban = $row['ban_status'];
+        if (intval($ban) === 0){
+            header("Location: ../viewer/BanHomePage.php");
+            return;
+        }
         // -----------
         if ($role == 'seller'){
             $sql = "SELECT * FROM sellers WHERE email = '$e'";
@@ -50,6 +54,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
         // -----------
         
         if ($role == 'seller' || $role == 'customer'){
+            echo "here";
             header("Location: ../viewer/Homepage.php");
         }
         else if ($role == 'admin'){

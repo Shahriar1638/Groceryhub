@@ -1,7 +1,7 @@
 <nav class="h-24 px-40 flex justify-between items-center">
     <div class="flex items-center">
-        <img class="h-16 w-16" src="../../ICON/logo.png" alt="">
-        <h1 class="text-3xl font-bold ml-3">Groceryhub</h1>
+        <img class="h-36 w-36" src="../../ICON/logo.png" alt="">
+        <h1 class="text-3xl font-bold ml-1">Groceryhub</h1>
     </div>  
     <?php
         if(isset($_COOKIE['userID'])) {

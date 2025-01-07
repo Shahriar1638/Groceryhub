@@ -16,6 +16,5 @@ if (isset($_POST['action']) && isset($_POST['email'])){
             header('Location: ../viewer/sellerList.php');
         }
     }
-    
 }
 ?>
