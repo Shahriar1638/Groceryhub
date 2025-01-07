@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2024 at 03:20 PM
+-- Generation Time: Jan 07, 2025 at 03:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -61,9 +61,7 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`productId`, `customeremail`, `productname`, `productamount`, `price`, `selleremail`) VALUES
-(1, 'ducks@ducks', 'Fresh Tomato', 5.00, 2.99, 'seller1@example.com'),
-(2, 'ducks@ducks', 'Crispy Lettuce', 1.00, 1.49, 'seller2@example.com'),
-(20, 'ducks@ducks', 'Chocolate Chip Cookies', 1.00, 3.49, 'seller2@example.com');
+(1, 'duck@duck.com', 'Fresh Tomato', 1.00, 2.99, 'seller1@example.com');
 
 -- --------------------------------------------------------
 
@@ -82,7 +80,7 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`customerID`, `email`, `points`) VALUES
-('CUS004', 'duck@duck.com', 17),
+('CUS004', 'duck@duck.com', 209),
 ('CUS005', 'name@email.com', 0);
 
 -- --------------------------------------------------------
@@ -93,9 +91,8 @@ INSERT INTO `customers` (`customerID`, `email`, `points`) VALUES
 
 CREATE TABLE `feedbacks` (
   `feedback_id` int(11) NOT NULL,
-  `admin_email` varchar(60) NOT NULL,
   `message` text NOT NULL,
-  `receiver_email` varchar(60) NOT NULL,
+  `email` varchar(120) DEFAULT NULL,
   `time` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -103,10 +100,10 @@ CREATE TABLE `feedbacks` (
 -- Dumping data for table `feedbacks`
 --
 
-INSERT INTO `feedbacks` (`feedback_id`, `admin_email`, `message`, `receiver_email`, `time`) VALUES
-(1, 'admin1@example.com', 'Thank you for your report. We have resolved the issue.', 'john.doe@example.com', '2024-12-06 19:02:35'),
-(2, 'admin2@example.com', 'We appreciate your feedback on the website performance.', 'jane.smith@example.com', '2024-12-06 19:02:35'),
-(3, 'admin1@example.com', 'Thank you for bringing this to our attention.', 'alice.j@example.com', '2024-12-06 19:02:35');
+INSERT INTO `feedbacks` (`feedback_id`, `message`, `email`, `time`) VALUES
+(1, 'Thank you for your report. We have resolved the issue.', 'john.doe@example.com', '2024-12-06 19:02:35'),
+(2, 'We appreciate your feedback on the website performance.', 'jane.smith@example.com', '2024-12-06 19:02:35'),
+(3, 'Thank you for bringing this to our attention.', 'alice.j@example.com', '2024-12-06 19:02:35');
 
 -- --------------------------------------------------------
 
@@ -132,6 +129,7 @@ CREATE TABLE `payment` (
 INSERT INTO `payment` (`transactionID`, `email`, `paid_amount`, `list_of_items`, `payment_date`, `expiry`, `cvc`, `progress_bar`) VALUES
 ('0ab957508c4322f370a3', 'duck@duck.com', 75.70, 'Fresh Tomato ( 2.00 Kg ) 5.98$ ,Crispy Lettuce ( 2.00 Kg ) 2.98$ ,Organic Potato ( 2.00 Kg ) 6.98$ ,Sweet Orange ( 24.00 Pieces ) 59.76$ ,', '2024-12-05 18:29:51', '2025-10-21', '123', 'inprogress'),
 ('2e41ea8e7b328f242dd2', 'duck@duck.com', 32.57, 'Fresh Tomato ( 3.00 Kg ) 8.97$ ,Crispy Lettuce ( 1.00 Kg ) 1.49$ ,Ripe Banana ( 12.00 Pieces ) 11.88$ ,Whole Wheat Bread ( 1.00 Pounds ) 4.99$ ,Chocolate Chip Cookies ( 1.50 Pounds ) 5.24$ ,', '2024-12-11 10:08:43', '2025-10-21', '123', 'inprogress'),
+('4aba48deaef70492345b', 'duck@duck.com', 92.15, 'Fresh Tomato ( 4.00 Kg ) 11.96$ ,Crispy Lettuce ( 2.00 Kg ) 2.98$ ,Juicy Apple ( 12.00 Pieces ) 23.88$ ,Ripe Banana ( 12.00 Pieces ) 11.88$ ,Sweet Orange ( 12.00 Pieces ) 29.88$ ,Red Bell Pepper ( 2.00 Kg ) 6.58$ ,Whole Wheat Bread ( 1.00 Pounds ) 4.99$ ,', '2024-12-20 11:44:25', '2025-10-21', '123', 'inprogress'),
 ('51558eee1a63a12ea862', 'duck@duck.com', 15.94, 'Fresh Tomato ( 2.00 Kg ) 5.98$ ,Crispy Lettuce ( 2.00 Kg ) 2.98$ ,Organic Potato ( 2.00 Kg ) 6.98$ ,', '2024-12-05 18:17:07', '2025-10-21', '123', 'inprogress'),
 ('6ad72eeb359aba42b4a3', 'duck@duck.com', 32.50, 'Fresh Tomato ( 4.00 Kg ) 11.96$ ,Crispy Lettuce ( 2.00 Kg ) 2.98$ ,Red Bell Pepper ( 2.00 Kg ) 6.58$ ,Whole Wheat Bread ( 1.50 Pounds ) 7.49$ ,Chocolate Chip Cookies ( 1.00 Pounds ) 3.49$ ,', '2024-12-05 18:15:00', '2025-10-21', '123', 'inprogress'),
 ('9f6b58f66bcc6cbc6862', 'duck@duck.com', 1.49, 'Crispy Lettuce ( 1.00 Kg ) 1.49$ ,', '2024-12-05 18:28:40', '2025-10-21', '123', 'inprogress'),
@@ -165,18 +163,17 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`productId`, `name`, `imgurl`, `price`, `ammount`, `publishdate`, `selleremail`, `cartcount`, `category`, `status`, `rating`, `numOfPeople`) VALUES
-(1, 'Fresh Tomato', 'https://i.ibb.co/C1LWMsR/tomato.jpg', 2.99, 'wk,0.5,1,2', '2024-03-29', 'seller1@example.com', 60, 'Vegetables', 'published', 4.13, 182),
-(2, 'Crispy Lettuce', 'https://i.ibb.co/MNGLvtk/lettuce.jpg', 1.49, 'wk,0.5,1,2', '2024-03-28', 'seller2@example.com', 16, 'Vegetables', 'published', 3.66, 39),
+(1, 'Fresh Tomato', 'https://i.ibb.co/C1LWMsR/tomato.jpg', 2.99, 'wk,0.5,1,2', '2024-03-29', 'seller1@example.com', 61, 'Vegetables', 'published', 4.13, 182),
+(2, 'Crispy Lettuce', 'https://i.ibb.co/MNGLvtk/lettuce.jpg', 1.49, 'wk,0.5,1,2', '2024-03-28', 'seller2@example.com', 17, 'Vegetables', 'published', 3.66, 39),
 (3, 'Organic Potato', 'https://i.ibb.co/vqmQk8Z/potato.jpg', 3.49, 'wk,0.5,1,2', '2024-03-27', 'seller1@example.com', 7, 'Vegetables', 'published', 3, 657),
-(13, 'Juicy Apple', 'https://i.ibb.co.com/JtCFHR3/apple.png', 1.99, 'p,4,10,12', '2024-03-25', 'seller2@example.com', 13, 'Fruits', 'published', 4, 169),
-(14, 'Ripe Banana', 'https://i.ibb.co.com/Q62h0L4/banana.jpg', 0.99, 'p,4,10,12', '2024-03-24', 'seller2@example.com', 16, 'Fruits', 'published', 4.11, 874),
-(15, 'Sweet Orange', 'https://i.ibb.co.com/9nGwsb2/orange.jpg', 2.49, 'p,4,10,12', '2024-03-23', 'seller1@example.com', 12, 'Fruits', 'published', 3.89, 3),
-(16, 'Fresh Carrot', 'https://i.ibb.co/BzC19cb/carrot.jpg', 1.49, 'wk,0.5,1,2', '2024-03-22', 'seller2@example.com', 21, 'Vegetables', 'published', 5, 695),
-(17, 'Green Broccoli', 'https://i.ibb.co/N71pydr/broccoli.jpg', 2.99, 'wk,0.5,1,2', '2024-03-21', 'seller1@example.com', 18, 'Vegetables', 'pending', 4, 882),
-(18, 'Red Bell Pepper', 'https://i.ibb.co/W6MQ5j2/pepper.jpg', 3.29, 'wk,0.5,1,2', '2024-03-20', 'seller1@example.com', 28, 'Vegetables', 'published', 1, 328),
-(19, 'Whole Wheat Bread', 'https://i.ibb.co/pxxMTsK/bread.jpg', 4.99, 'wp,0.5,1,1.5', '2024-03-19', 'seller2@example.com', 10, 'Bakery', 'published', 1, 988),
+(13, 'Juicy Apple', 'https://i.ibb.co.com/JtCFHR3/apple.png', 1.99, 'p,4,10,12', '2024-03-25', 'seller2@example.com', 14, 'Fruits', 'published', 4, 169),
+(14, 'Ripe Banana', 'https://i.ibb.co.com/Q62h0L4/banana.jpg', 0.99, 'p,4,10,12', '2024-03-24', 'seller2@example.com', 17, 'Fruits', 'published', 4.11, 874),
+(15, 'Sweet Orange', 'https://i.ibb.co.com/9nGwsb2/orange.jpg', 2.49, 'p,4,10,12', '2024-03-23', 'seller1@example.com', 13, 'Fruits', 'published', 3.89, 3),
+(17, 'Green Broccoli', 'https://i.ibb.co/N71pydr/broccoli.jpg', 2.99, 'wk,0.5,1,2', '2024-03-21', 'seller1@example.com', 18, 'Vegetables', 'published', 4, 882),
+(18, 'Red Bell Pepper', 'https://i.ibb.co/W6MQ5j2/pepper.jpg', 3.29, 'wk,0.5,1,2', '2024-03-20', 'seller1@example.com', 29, 'Vegetables', 'published', 1, 328),
+(19, 'Whole Wheat Bread', 'https://i.ibb.co/pxxMTsK/bread.jpg', 4.99, 'wp,0.5,1,1.5', '2024-03-19', 'seller2@example.com', 11, 'Bakery', 'published', 1, 988),
 (20, 'Chocolate Chip Cookies', 'https://i.ibb.co/Nmrv15C/cookies.jpg', 3.49, 'wp,0.5,1,1.5', '2024-03-18', 'seller2@example.com', 33, 'Bakery', 'published', 3, 958),
-(26, 'Whatever this drink is', 'https://i.ibb.co.com/2ZgMT9g/image.png', 899.00, 'l,1,2,2.5', '2024-12-11', 'seller1@example.com', 0, 'Beverages & Snacks', 'published', 4.5, 2);
+(26, 'Whatever this drink is', 'https://i.ibb.co.com/2ZgMT9g/image.png', 899.00, 'l,1,2,2.5', '2024-12-11', 'seller1@example.com', 0, 'Beverages & Snacks', 'rejected', 4.5, 2);
 
 -- --------------------------------------------------------
 
@@ -203,10 +200,11 @@ INSERT INTO `reports` (`report_id`, `reporter_name`, `reporter_email`, `message`
 (1, 'John Doe', 'john.doe@example.com', 'There is an issue with my order.', '2024-12-01 10:15:00', '', 1, 'seller1@example.com'),
 (2, 'Jane Smith', 'jane.smith@example.com', 'The website is loading slowly.', '2024-12-02 14:30:00', '', 1, 'seller1@example.com'),
 (3, 'Alice Johnson', 'alice.j@example.com', 'I found a bug in the payment page.', '2024-12-03 09:45:00', '', 1, 'seller1@example.com'),
-(4, 'duck', 'duck@duck.com', 'dgsdfgsdfg', '2024-12-06 21:48:54', '', 0, 'seller1@example.com'),
+(4, 'duck', 'duck@duck.com', 'dgsdfgsdfg', '2024-12-06 21:48:54', '', 1, 'seller1@example.com'),
 (5, 'duck', 'duck@duck.com', 'nigga black heheh', '2024-12-06 21:51:34', '', 0, 'seller1@example.com'),
 (6, 'duck', 'duck@duck.com', 'dbfiujdfouj', '2024-12-11 10:08:17', '', 0, 'seller1@example.com'),
-(7, 'duck', 'duck@duck.com', 'edrtfcgyhcfghvyjbk', '2024-12-11 06:36:45', '', 0, 'seller1@example.com');
+(7, 'duck', 'duck@duck.com', 'edrtfcgyhcfghvyjbk', '2024-12-11 06:36:45', '', 0, 'seller1@example.com'),
+(8, 'duck', 'duck@duck.com', 'skhbjdasjkhd', '2025-01-07 15:39:06', '', 0, 'seller1@example.com');
 
 -- --------------------------------------------------------
 
@@ -227,8 +225,8 @@ CREATE TABLE `sellers` (
 --
 
 INSERT INTO `sellers` (`sellerID`, `email`, `revenue`, `numOfApproved`, `numOfReject`) VALUES
-('SLR001', 'seller1@example.com', 10221.82, 5, 1),
-('SLR002', 'seller2@example.com', 15120.62, 3, 0);
+('SLR001', 'seller1@example.com', 10270.24, 6, 1),
+('SLR002', 'seller2@example.com', 15164.35, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -256,8 +254,7 @@ INSERT INTO `users` (`role`, `username`, `email`, `password`, `phone_number`, `g
 ('admin', 'Admin two', 'admin2@example.com', 'aaa', '564654654654', 'Male', 'https://i.ibb.co.com/nbttrDz/PROFILE.png', 'Some where in planet earth', 1),
 ('admin', 'admin_user', 'admin@example.com', 'adminpass', '011001100112', 'Male', 'https://i.ibb.co.com/nbttrDz/PROFILE.png', '1234 Elm Street, Springfield, IL 62704, USA', 1),
 ('customer', 'duck', 'duck@duck.com', 'lol', '23155665478', 'Male', 'https://i.ibb.co.com/nbttrDz/PROFILE.png', '1234 Elm Street, Springfield, IL 62704, USA', 0),
-('customer', 'duck', 'ducks@ducks', 'aaa', '23155665478', 'Male', 'https://i.ibb.co.com/nbttrDz/PROFILE.png', '1234 Elm Street, Springfield, IL 62704, USA', 1),
-('customer', 'NAme', 'name@email.com', '123', '', 'Female', 'https://i.ibb.co.com/nbttrDz/PROFILE.png', 'Some where in the planet earth', 1),
+('customer', 'NAme', 'name@email.com', '123', '778654564456', 'Female', 'https://i.ibb.co.com/nbttrDz/PROFILE.png', 'Some where in the planet earth', 1),
 ('seller', 'seller1', 'seller1@example.com', 'sellerpass', '565665563', 'Male', 'https://i.ibb.co.com/nbttrDz/PROFILE.png', '1234 Elm Street, Springfield, IL 62704, USA', 1),
 ('seller', 'seller2', 'seller2@example.com', 'sellerpass', '011001100112', 'Male', 'https://i.ibb.co.com/nbttrDz/PROFILE.png', '1234 Elm Street, Springfield, IL 62704, USA', 1);
 
@@ -279,7 +276,8 @@ CREATE TABLE `wishlist` (
 INSERT INTO `wishlist` (`productId`, `customer_email`) VALUES
 (1, 'duck@duck.com'),
 (14, 'duck@duck.com'),
-(3, 'duck@duck.com');
+(3, 'duck@duck.com'),
+(13, 'duck@duck.com');
 
 --
 -- Indexes for dumped tables
@@ -372,7 +370,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

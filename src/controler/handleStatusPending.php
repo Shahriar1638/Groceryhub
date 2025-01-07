@@ -7,10 +7,14 @@ if(isset($_POST['productid']) && isset($_POST['productstatus']) && isset($_POST[
     $query = "UPDATE products SET status = '$action' WHERE productId = '$productid'";
     $result = mysqli_query($conn, $query);
     if($result){
+
+        // get seller email
         $query = "select selleremail from products where productId = '$productid'";
         $result = mysqli_query($conn, $query);
         if($result){
             $row = mysqli_fetch_assoc($result);
+
+            //set seller email to a varaible
             $selleremail = $row['selleremail'];
             if ($action == 'approve'){
                 $query = "UPDATE sellers set numOfApproved = numOfApproved + 1 where email = '$selleremail'";
