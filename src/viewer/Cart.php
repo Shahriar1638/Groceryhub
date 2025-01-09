@@ -123,7 +123,7 @@
               document.getElementById('loyaltyPoints').innerText = loyaltyPoints;
               updatePrices();
             }
-          }
+            }
 
           function updatePrices() {
             let additionalDiscount = loyaltyPoints / 1000 * totalCost;
@@ -157,20 +157,7 @@
             </div>
             <div class="flex items-center flex-row">
               <input class="rounded-md px-4 py-2 border border-solid border-gray-400 w-full mr-6" type="number" name="cardnumber" placeholder="Card Number" required>
-              <?php 
-              if ($totalCost == $finalPrice) {
-                ?>
-                <button onclick="handlePayment('<?php echo $useremail; ?>','<?php echo $finalPrice; ?>', 123, '2025-10-21')" class="text-white font-bold uppercase text-lg px-6 py-2 rounded-lg bg-redSecondary">pay now</button>
-              <?php
-              } else {
-                ?>
-                <button onclick="handlePaymentWithPoints('<?php echo $useremail; ?>','<?php echo $finalPrice; ?>',document.getElementsByName('cvc')[0].value, document.getElementsByName('expiry')[0].value))" class="text-white font-bold uppercase text-lg px-6 py-2 rounded-lg bg-redSecondary">pay now</button>
-              <?php
-              }
-             ?>
-            </div>
-            <div>
-              <h1>tempo: <?php echo $allitems ?></h1>
+              <button onclick="handlePayment('<?php echo $useremail; ?>','<?php echo $finalPrice; ?>', document.getElementsByName('cvc')[0].value, document.getElementsByName('expiry')[0].value)" class="text-white font-bold uppercase text-lg w-40 px-6 py-2 rounded-lg bg-redSecondary">pay now</button>
             </div>
           </div>
         </div>
@@ -187,6 +174,7 @@
                 <input type="text" name="cvc">
                 <input type="text" name="expiry">
                 <input type="text" name="allitems" value="<?php echo $allitems; ?>">
+                <input type="text" name="points">
             </form>
         </div>
         <div class="hidden">
@@ -200,21 +188,22 @@
         </div>
         <script>
             function handlePayment(useremail, totalcost, cvc, expiry) {
-                console.log(useremail, totalcost, cvc, expiry);
+                console.log("hellow ",useremail, totalcost, cvc, expiry);
                 document.getElementById('paymentform').elements['customeremail'].value = useremail;
                 document.getElementById('paymentform').elements['totalcost'].value = totalcost;
                 document.getElementById('paymentform').elements['cvc'].value = cvc;
                 document.getElementById('paymentform').elements['expiry'].value = expiry;
+                document.getElementById('paymentform').elements['points'].value = loyaltyPoints;
                 document.getElementById('paymentform').submit();
             };
-            function handlePaymentWithPoints(useremail, totalcost, cvc, expiry) {
-                console.log(useremail, totalcost, cvc, expiry);
-                document.getElementById('paymentform2').elements['customeremail'].value = useremail;
-                document.getElementById('paymentform2').elements['totalcost'].value = totalcost;
-                document.getElementById('paymentform').elements['cvc'].value = cvc;
-                document.getElementById('paymentform').elements['expiry'].value = expiry;
-                document.getElementById('paymentform2').submit();
-            };
+            // function handlePaymentWithPoints(useremail, totalcost, cvc, expiry) {
+            //     console.log(useremail, totalcost, cvc, expiry);
+            //     document.getElementById('paymentform2').elements['customeremail'].value = useremail;
+            //     document.getElementById('paymentform2').elements['totalcost'].value = totalcost;
+            //     document.getElementById('paymentform').elements['cvc'].value = cvc;
+            //     document.getElementById('paymentform').elements['expiry'].value = expiry;
+            //     document.getElementById('paymentform2').submit();
+            // };
             function handleRemoveFromCart(useremail, productid) {
                 document.getElementById('removecart').elements['productid'].value = productid;
                 document.getElementById('removecart').elements['customeremail'].value = useremail;

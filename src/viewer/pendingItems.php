@@ -65,7 +65,7 @@
                                 <td><?php echo $productprice ?></td>
                                 <td><?php echo $productseller ?></td>
                                 <td><?php echo $productStatus ?></td>
-                                <td><button onclick="handleStatus('<?php echo $productid ?>','<?php echo $productStatus ?>','reject')">reject</button>||<button onclick="handleStatus('<?php echo $productid ?>','<?php echo $productStatus ?>','published')">approve</button></td>
+                                <td><button onclick="handleStatus('<?php echo $productid ?>','<?php echo $productStatus ?>','rejected')">reject</button>||<button onclick="handleStatus('<?php echo $productid ?>','<?php echo $productStatus ?>','published')">approve</button></td>
                               </tr>
                     <?php
                           }

@@ -1,6 +1,6 @@
 <nav class="h-24 px-56 flex justify-between items-center">
     <div class="flex items-center">
-        <img class="h-16 w-16" src="../../ICON/logo.png" alt="">
+        <img class="h-40 w-40" src="../../ICON/logo.png" alt="">
         <h1 class="text-3xl font-bold ml-3">Groceryhub</h1>
     </div>  
     <div class="flex items-center">

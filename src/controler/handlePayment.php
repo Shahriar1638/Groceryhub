@@ -3,6 +3,7 @@ require_once('DBconnect.php');
 if (isset($_POST['totalcost']) && isset($_POST['customeremail']) && isset($_POST['cvc']) && isset($_POST['expiry']) && isset($_POST['allitems'])) {
     $totalcost = $_POST['totalcost'];
 
+    $consumed_points = $_POST['points'];
     //  cal culating points for customer
     $conversionRate = 10; // 1 point per 10$ shopping
     $points = floor($totalcost / $conversionRate);
@@ -10,7 +11,7 @@ if (isset($_POST['totalcost']) && isset($_POST['customeremail']) && isset($_POST
     $query = "SELECT * FROM carts WHERE customeremail = '$customeremail'";
     $result = mysqli_query($conn, $query);
 
-    $allitems = $_POST['allitems'];
+    $allitems = rtrim($_POST['allitems'], ',');
     $cvc = $_POST['cvc'];
     $expiry = $_POST['expiry'];
     if ($result) {
@@ -38,7 +39,7 @@ if (isset($_POST['totalcost']) && isset($_POST['customeremail']) && isset($_POST
         }
         //save records in payment table
         $transitionID = bin2hex(random_bytes(10));
-        $query = "INSERT INTO Payment (transactionID, email, paid_amount, list_of_items, payment_date, expiry, cvc) VALUES ('$transitionID', '$customeremail', '$totalcost', '$allitems', NOW(), '$expiry', '$cvc')";
+        $query = "INSERT INTO Payment (transactionID, email, paid_amount, list_of_items, payment_date, expiry, cvc, point_consumed) VALUES ('$transitionID', '$customeremail', '$totalcost', '$allitems', NOW(), '$expiry', '$cvc', '$consumed_points')";
         $result = mysqli_query($conn, $query);
         if ($result) {
             echo "Payment Successful";
@@ -56,7 +57,7 @@ if (isset($_POST['totalcost']) && isset($_POST['customeremail']) && isset($_POST
     if ($result){
 
         // adding points for customer
-        $query = "UPDATE customers SET points = points + $points WHERE email = '$customeremail'";
+        $query = "UPDATE customers SET points = (points + $points)-$consumed_points WHERE email = '$customeremail'";
         $result = mysqli_query($conn, $query);
         if ($result){
             $query = "SELECT * FROM customers WHERE email = '$customeremail'";
@@ -65,7 +66,7 @@ if (isset($_POST['totalcost']) && isset($_POST['customeremail']) && isset($_POST
             $loyaltyPoints = $row['points'];
             setcookie('loyaltyPoints', '', time() - 3600, "/");
             setcookie('loyaltyPoints', $loyaltyPoints, time() + (86400 * 30), "/");
-            header("Location: ../viewer/customerHome.php");
+            header("Location: ../viewer/Homepage.php");
         } else {
             echo "Error: " . $query . "<br>" . mysqli_error($conn);
         }
