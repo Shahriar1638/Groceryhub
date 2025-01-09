@@ -6,6 +6,7 @@
     <title>Groceryhub</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.9.0/dist/full.min.css" rel="stylesheet" type="text/css" />
     <!-- design plugs -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://kit.fontawesome.com/5f28ebb90a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,6 +37,7 @@
                             <th>Products</th>
                             <th>Paid Ammount</th>
                             <th>Payment date</th>
+                            <th>Progress</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,6 +52,7 @@
                                 $products = $row['list_of_items'];
                                 $paidammount = $row['paid_amount'];
                                 $paymentdate = $row['payment_date'];
+                                $progress = $row['progression'];
                             ?>
                             <tr>
                             <td><?php echo $transactionid; ?></td>
@@ -65,6 +68,15 @@
                             </td>
                             <td><?php echo $paidammount; ?></td>
                             <td><?php echo $paymentdate; ?></td>
+                            <td>
+                                <?php 
+                                if ($progress == "received") {
+                                    echo "Received";
+                                } else {
+                                ?><button onclick="handleStatus('<?php echo $transactionid ?>')">In progress</button><?php
+                                }
+                                ?>
+                            </td>
                         </tr>
                         <?php
                             }} else {
@@ -75,6 +87,28 @@
                 </table>
             </div>
         </section>
+        <form action="../controler/handleProductRecieved.php" method="post" id="statusForm">
+            <input type="hidden" name="transactionid">
+        </form>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function handleStatus(transactionid){
+                Swal.fire({
+                    title: 'Did you recieved all the products?',
+                    text: "Check all the products before confirming!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, remove it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('statusForm').elements['transactionid'].value = transactionid;
+                        document.getElementById('statusForm').submit();
+                    }
+                });
+            }
+        </script>
     </main>
 </body>
 </html>
