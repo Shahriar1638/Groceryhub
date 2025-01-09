@@ -68,12 +68,13 @@
                             </td>
                             <td><?php echo $paidammount; ?></td>
                             <td><?php echo $paymentdate; ?></td>
-                            <td>
+                            <td class="flex items-center flex-row w-56">
                                 <?php 
-                                if ($progress == "received") {
-                                    echo "Received";
+                                if ($progress == "received" || $progress == "cancelled"){
+                                    ?><span class="uppercase"><?php echo $progress; ?></span>
+                                    <?php
                                 } else {
-                                ?><button onclick="handleStatus('<?php echo $transactionid ?>')">In progress</button><?php
+                                ?><button class="uppercase mr-2" onclick="handleStatus('<?php echo $transactionid ?>')">In progress</button><button onclick="handleOrderCancel('<?php echo $transactionid ?>')" class="uppercase">cancel</button><?php
                                 }
                                 ?>
                             </td>
@@ -88,6 +89,9 @@
             </div>
         </section>
         <form action="../controler/handleProductRecieved.php" method="post" id="statusForm">
+            <input type="hidden" name="transactionid">
+        </form>
+        <form action="../controler/handleOrderCancel.php" method="post" id="cancelorderform">
             <input type="hidden" name="transactionid">
         </form>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -105,6 +109,23 @@
                     if (result.isConfirmed) {
                         document.getElementById('statusForm').elements['transactionid'].value = transactionid;
                         document.getElementById('statusForm').submit();
+                    }
+                });
+            }
+
+            function handleOrderCancel(transactionid){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, cancel it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('cancelorderform').elements['transactionid'].value = transactionid;
+                        document.getElementById('cancelorderform').submit();
                     }
                 });
             }
