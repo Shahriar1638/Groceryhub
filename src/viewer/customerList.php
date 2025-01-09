@@ -64,9 +64,9 @@
                                     <td><?php echo $customerPhone ?></td>
                                     <td>
                                         <?php if ($banStatus == '0') { ?>
-                                            <button class="px-6 py-2 rounded-md bg-green-500 uppercase text-white" onclick="handleBanStatus('<?php echo $customerEmail ?>', 'unban')">Unban</button>
+                                            <button class="px-6 py-2 rounded-md bg-green-500 uppercase text-white" onclick="handleBanStatus('<?php echo $customerEmail ?>', 'unban','customer')">Unban</button>
                                         <?php } else { ?>
-                                            <button class="px-6 py-2 rounded-md bg-red-500 uppercase text-white" onclick="handleBanStatus('<?php echo $customerEmail ?>', 'ban')">Ban</button>
+                                            <button class="px-6 py-2 rounded-md bg-red-500 uppercase text-white" onclick="handleBanStatus('<?php echo $customerEmail ?>', 'ban', 'customer')">Ban</button>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -79,11 +79,13 @@
             <form class="hidden" id="HandleBan" method="post" action="../controler/handleBanStatus.php">
                 <input type="text" name="email">
                 <input type="text" name="action">
+                <input type="text" name="user">
             </form>
             <script>
-                function handleBanStatus(email, action) {
+                function handleBanStatus(email, action, user) {
                     document.querySelector('form').elements['email'].value = email;
                     document.querySelector('form').elements['action'].value = action;
+                    document.querySelector('form').elements['user'].value = user;
                     document.querySelector('form').submit();
                 }
             </script>

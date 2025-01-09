@@ -6,7 +6,7 @@
     <div class="flex items-center">
         <div class="flex items-center hover:text-redSecondary">
             <i class="fa-solid fa-house fa-rotate-by mr-2"></i>
-            <a href="customerHome.php" class="text-xl font-semibold uppercase">Home</a>
+            <a href="Homepage.php" class="text-xl font-semibold uppercase">Home</a>
         </div>
         <div class="flex items-center ml-5 hover:text-redSecondary">
             <i class="fa-solid fa-list mr-2"></i>
